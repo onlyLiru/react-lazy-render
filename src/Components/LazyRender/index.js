@@ -1,17 +1,17 @@
 /*
- * @Author: liru 
- * @Date: 2021-01-07 16:11:56 
+ * @Author: liru
+ * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-08 16:58:23
+ * @Last Modified time: 2021-01-08 18:26:28
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const defaultStyle = {
-  minHeight: '200px',
-  background: '#f9f8f9',
+  minHeight: "200px",
+  background: "#f9f8f9",
   borderRadius: 8,
-  marginBottom: '10px'
-}
+  marginBottom: "10px",
+};
 
 /**
  *
@@ -23,31 +23,40 @@ const defaultStyle = {
  * @param {react component} { CustomPlaceholder = 自定义占位组建【选】 }
  * @return {react component} { 包装后的react组建 }
  */
-export default function ({ TargetComponent = null, CustomPlaceholder = null, placeholderStyle = null, distance = 0 } = {}) {
+export default function ({
+  TargetComponent = null,
+  CustomPlaceholder = null,
+  placeholderStyle = null,
+  distance = 0,
+} = {}) {
   if (!TargetComponent) {
-    return <div>请配置异步加载的组件!!!!!!!</div>
+    return <div>请配置异步加载的组件!!!!!!!</div>;
   }
 
-  const mergeStyle = placeholderStyle ? { ...defaultStyle, ...placeholderStyle } : defaultStyle;
+  const mergeStyle = placeholderStyle
+    ? { ...defaultStyle, ...placeholderStyle }
+    : defaultStyle;
 
   return class LazyComponent extends Component {
     constructor(props) {
       super(props);
+      this.timer = null;
       this.state = {
         isTrueRender: false,
-        timer: null,
-        customComId: '__async_painter_custom_container__'
-      }
+        customComId: "__async_painter_custom_container__",
+      };
     }
 
     render() {
-      return this.state.isTrueRender
-        ? <TargetComponent {...this.props} />
-        : (
-          (CustomPlaceholder && <div id={this.state.customComId}><CustomPlaceholder /></div>)
-          ||
-          <div ref={dom => this.lazyCom = dom} style={mergeStyle} />
-        );
+      return this.state.isTrueRender ? (
+        <TargetComponent {...this.props} />
+      ) : (
+        (CustomPlaceholder && (
+          <div id={this.state.customComId}>
+            <CustomPlaceholder />
+          </div>
+        )) || <div ref={(dom) => (this.lazyCom = dom)} style={mergeStyle} />
+      );
     }
 
     componentDidMount() {
@@ -55,42 +64,42 @@ export default function ({ TargetComponent = null, CustomPlaceholder = null, pla
         this.lazyCom = document.querySelector(`#${this.state.customComId}`);
       }
       this.checkRender();
-      window.addEventListener('scroll', this.checkRender);
+      window.addEventListener("scroll", this.checkRender);
     }
 
     checkRender = () => {
       if (this.state.isTrueRender) {
-        console.log("already render removeEventListener");
         return;
       }
 
-      let { timer } = this;
+      const { timer } = this;
       if (timer) {
         clearTimeout(timer);
       }
 
       this.timer = setTimeout(this.measure, 0);
-
-    }
+    };
 
     measure = () => {
-      let lazyCom = this.lazyCom,
-        lazyComOffsetTop = lazyCom.offsetTop;
+      const { lazyCom } = this;
+      const lazyComOffsetTop = lazyCom.offsetTop;
 
-      let bodyEle = document.body,
-        { clientHeight: bodyClientHeight } = bodyEle;
+      const bodyEle = document.body;
+      const { clientHeight: bodyClientHeight } = bodyEle;
 
-      let documentEle = document.documentElement,
-        { scrollTop: documentScrollTop } = documentEle;
+      const documentEle = document.documentElement;
+      const { scrollTop: documentScrollTop } = documentEle;
 
       if (documentScrollTop + bodyClientHeight >= lazyComOffsetTop - distance) {
-        this.setState({
-          isTrueRender: true
-        }, () => {
-          window.removeEventListener('scroll', this.checkRender);
-        });
+        this.setState(
+          {
+            isTrueRender: true,
+          },
+          () => {
+            window.removeEventListener("scroll", this.checkRender);
+          }
+        );
       }
-    }
-
-  }
+    };
+  };
 }
