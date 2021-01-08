@@ -2,7 +2,7 @@
  * @Author: liru 
  * @Date: 2021-01-07 16:11:56 
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-08 14:29:59
+ * @Last Modified time: 2021-01-08 16:58:23
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from 'react';
 
@@ -17,11 +17,11 @@ const defaultStyle = {
  *
  *
  * @export
- * @param {*} { TargetComponent = 要异步加载的组建【必】 }
- * @param {*} { distance = 距离视口距离多远开始渲染真是组件【选】【默0】 }
- * @param {*} { placeholderStyle = 默认占位组建样式【选】【默-defaultStyle】 }
- * @param {*} { CustomPlaceholder = 自定义占位组建【选】 }
- * @return {*} { 包装后的react组建 }
+ * @param {react component} { TargetComponent = 要异步加载的组建【必】 }
+ * @param {number} { distance = 距离视口距离多远开始渲染真是组件【选】【默0】 }
+ * @param {object} { placeholderStyle = 默认占位组建样式【选】【默-defaultStyle】 }
+ * @param {react component} { CustomPlaceholder = 自定义占位组建【选】 }
+ * @return {react component} { 包装后的react组建 }
  */
 export default function ({ TargetComponent = null, CustomPlaceholder = null, placeholderStyle = null, distance = 0 } = {}) {
   if (!TargetComponent) {
@@ -58,13 +58,10 @@ export default function ({ TargetComponent = null, CustomPlaceholder = null, pla
       window.addEventListener('scroll', this.checkRender);
     }
 
-    componentDidUpdate(prevProps) {
-      //
-    }
-
     checkRender = () => {
       if (this.state.isTrueRender) {
-        return console.log("already render removeEventListener");
+        console.log("already render removeEventListener");
+        return;
       }
 
       let { timer } = this;
