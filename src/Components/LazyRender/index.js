@@ -4,13 +4,13 @@
  * @Last Modified by: liru
  * @Last Modified time: 2021-01-12 11:37:00
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 const defaultStyle = {
-  minHeight: "200px",
-  background: "#f9f8f9",
+  minHeight: '200px',
+  background: '#f9f8f9',
   borderRadius: 8,
-  marginBottom: "10px",
+  marginBottom: '10px',
 };
 
 /**
@@ -43,7 +43,7 @@ export default function ({
       this.timer = null;
       this.state = {
         isTrueRender: false,
-        customComId: "__async_painter_custom_container__",
+        customComId: '__async_painter_custom_container__',
       };
     }
 
@@ -71,7 +71,7 @@ export default function ({
         this.lazyCom = document.querySelector(`#${this.state.customComId}`);
       }
       this.checkRender();
-      window.addEventListener("scroll", this.checkRender);
+      window.addEventListener('scroll', this.checkRender);
     }
 
     checkRender = () => {
@@ -103,7 +103,7 @@ export default function ({
             isTrueRender: true,
           },
           () => {
-            window.removeEventListener("scroll", this.checkRender);
+            window.removeEventListener('scroll', this.checkRender);
           }
         );
       }

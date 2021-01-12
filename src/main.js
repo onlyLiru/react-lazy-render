@@ -1,3 +1,3 @@
-import LazyRender from "./Components/LazyRender/index";
+import LazyRender from './Components/LazyRender/index';
 
 export default LazyRender;
