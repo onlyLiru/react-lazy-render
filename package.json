@@ -1,11 +1,11 @@
 {
   "name": "@ali/tbdx-react-lazy-render",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint --fix src/",
+    "lint": "eslint --fix *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
