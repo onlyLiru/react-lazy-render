@@ -2,7 +2,7 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-18 20:16:38
+ * @Last Modified time: 2021-01-18 20:20:11
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from 'react';
 
@@ -14,13 +14,10 @@ interface Params {
 }
 
 const defaultStyle = {
-  minHeight: "200px",
+  minHeight: '200px',
   background: '#f9f8f9',
   borderRadius: 8,
   marginBottom: '10px',
-
-
-
 };
 
 /**
