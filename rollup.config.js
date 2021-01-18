@@ -9,22 +9,24 @@ const extensions = ['.ts', '.js', '.jsx', '.es6', '.es', '.mjs', '.tsx'];
 
 export default {
   input: 'src/main.ts',
-  output: [{
-    file: pkg.main,
-    format: 'cjs',
-  }],
+  output: [
+    {
+      file: pkg.main,
+      format: 'cjs',
+    },
+  ],
   plugins: [
     nodeResolve({
-      extensions
+      extensions,
     }),
     commonjs(),
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**',
       include: ['src/**/*'],
-      extensions
+      extensions,
     }),
-    uglify()
+    uglify(),
   ],
   external: ['react'],
 };
