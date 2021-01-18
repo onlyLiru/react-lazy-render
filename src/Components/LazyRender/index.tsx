@@ -2,9 +2,16 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-12 11:37:00
+ * @Last Modified time: 2021-01-18 20:00:01
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from 'react';
+
+interface Params {
+  TargetComponent: any;
+  CustomPlaceholder?: any;
+  placeholderStyle?: any;
+  distance?: number
+}
 
 const defaultStyle = {
   minHeight: '200px',
@@ -23,14 +30,18 @@ const defaultStyle = {
  * @param {react component} { CustomPlaceholder = 自定义占位组建【选】 }
  * @return {react component} { 包装后的react组建 }
  */
+
+
 export default function ({
   TargetComponent = null,
   CustomPlaceholder = null,
   placeholderStyle = null,
   distance = 0,
-} = {}) {
+}: Params = {
+    TargetComponent: null
+  }) {
   if (!TargetComponent) {
-    return <div>请配置异步加载的组件!!!!!!!</div>;
+    return <div>请配置异步加载的组件!!!!!!! </div>;
   }
 
   const mergeStyle = placeholderStyle
@@ -38,7 +49,14 @@ export default function ({
     : defaultStyle;
 
   return class LazyComponent extends Component {
-    constructor(props) {
+    state: {
+      isTrueRender: boolean,
+      customComId: string
+    };
+    lazyCom: any;
+    timer: any;
+
+    constructor(props: any) {
       super(props);
       this.timer = null;
       this.state = {
@@ -51,42 +69,55 @@ export default function ({
       return this.state.isTrueRender ? (
         <TargetComponent {...this.props} />
       ) : (
-        (CustomPlaceholder && (
-          <div id={this.state.customComId}>
-            <CustomPlaceholder />
-          </div>
-        )) || (
-          <div
-            ref={(dom) => {
-              this.lazyCom = dom;
-            }}
-            style={mergeStyle}
-          />
-        )
-      );
+          (CustomPlaceholder && (
+            <div id={this.state.customComId} >
+              <CustomPlaceholder />
+            </div>
+          )) || (
+            <div
+              ref={
+                (dom) => {
+                  this.lazyCom = dom;
+                }
+              }
+              style={mergeStyle}
+            />
+          )
+        );
     }
 
     componentDidMount() {
       if (CustomPlaceholder) {
         this.lazyCom = document.querySelector(`#${this.state.customComId}`);
       }
-      this.checkRender();
-      window.addEventListener('scroll', this.checkRender);
+
+      if (!this.state.isTrueRender) {
+        if (window.IntersectionObserver && typeof window.IntersectionObserver === "function") {
+          //支持IntersectionObserver的浏览器
+          this.initIo();
+        } else {
+          this.checkRender();
+        }
+      }
+
     }
 
     checkRender = () => {
-      if (this.state.isTrueRender) {
-        return;
-      }
-
       const { timer } = this;
+
       if (timer) {
         clearTimeout(timer);
       }
 
+      window.addEventListener('scroll', this.checkRender);
       this.timer = setTimeout(this.measure, 0);
+
     };
 
+    /**
+     *以offsetTop的形式计算可见
+     *
+     */
     measure = () => {
       const { lazyCom } = this;
       const lazyComOffsetTop = lazyCom.offsetTop;
@@ -98,15 +129,41 @@ export default function ({
       const { scrollTop: documentScrollTop } = documentEle;
 
       if (documentScrollTop + bodyClientHeight >= lazyComOffsetTop - distance) {
-        this.setState(
-          {
-            isTrueRender: true,
-          },
-          () => {
-            window.removeEventListener('scroll', this.checkRender);
-          }
-        );
+        this.trueRender();
       }
     };
+
+    /**
+     *以IntersectionObserver的方式监视元素是否出现在可见区域
+     *IntersectionObserver 可参考 1,https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API
+     *2,http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html
+     */
+    initIo = () => {
+      let { lazyCom } = this;
+      let io = new IntersectionObserver((entries) => {
+        let [{ isIntersecting }] = entries;
+        if (isIntersecting) {
+          this.trueRender(io);
+        }
+        console.log(isIntersecting);
+      }, {
+        root: null,
+        threshold: 0
+      });
+      io.observe(lazyCom);
+    }
+
+    trueRender(io?: any) {
+      this.setState(
+        {
+          isTrueRender: true,
+        },
+        () => {
+          io && io.disconnect() || window.removeEventListener('scroll', this.checkRender);
+        }
+      );
+    }
+
+
   };
 }
