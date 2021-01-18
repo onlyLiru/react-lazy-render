@@ -2,7 +2,7 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-18 20:20:11
+ * @Last Modified time: 2021-01-18 21:14:41
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from 'react';
 
@@ -38,8 +38,8 @@ export default function (
     placeholderStyle = null,
     distance = 0,
   }: Params = {
-    TargetComponent: null,
-  }
+      TargetComponent: null,
+    }
 ) {
   if (!TargetComponent) {
     return <div>请配置异步加载的组件!!!!!!! </div>;
@@ -70,19 +70,19 @@ export default function (
       return this.state.isTrueRender ? (
         <TargetComponent {...this.props} />
       ) : (
-        (CustomPlaceholder && (
-          <div id={this.state.customComId}>
-            <CustomPlaceholder />
-          </div>
-        )) || (
-          <div
-            ref={(dom) => {
-              this.lazyCom = dom;
-            }}
-            style={mergeStyle}
-          />
-        )
-      );
+          (CustomPlaceholder && (
+            <div id={this.state.customComId}>
+              <CustomPlaceholder />
+            </div>
+          )) || (
+            <div
+              ref={(dom) => {
+                this.lazyCom = dom;
+              }}
+              style={mergeStyle}
+            />
+          )
+        );
     }
 
     componentDidMount() {
