@@ -2,7 +2,7 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-18 21:14:41
+ * @Last Modified time: 2021-01-19 14:42:17
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from 'react';
 
@@ -98,39 +98,28 @@ export default function (
           // 支持IntersectionObserver的浏览器
           this.initIo();
         } else {
-          this.checkRender();
+          window.addEventListener('scroll', this.measure);
         }
       }
     }
-
-    checkRender = () => {
-      const { timer } = this;
-
-      if (timer) {
-        clearTimeout(timer);
-      }
-
-      window.addEventListener('scroll', this.checkRender);
-      this.timer = setTimeout(this.measure, 0);
-    };
 
     /**
      *以offsetTop的形式计算可见
      *
      */
     measure = () => {
-      const { lazyCom } = this;
-      const lazyComOffsetTop = lazyCom.offsetTop;
+      const { lazyCom } = this,
+        { innerHeight: winHeight } = window;
 
-      const bodyEle = document.body;
-      const { clientHeight: bodyClientHeight } = bodyEle;
-
-      const documentEle = document.documentElement;
-      const { scrollTop: documentScrollTop } = documentEle;
-
-      if (documentScrollTop + bodyClientHeight >= lazyComOffsetTop - distance) {
-        this.trueRender();
+      if (!lazyCom || !lazyCom.getBoundingClientRect) {
+        return;
       }
+
+      let rect = lazyCom.getBoundingClientRect();
+
+      if (rect.top <= winHeight + distance) {
+        this.trueRender();
+      };
     };
 
     /**
@@ -149,7 +138,7 @@ export default function (
         },
         {
           root: null,
-          threshold: 0,
+          threshold: 1,
         }
       );
       io.observe(lazyCom);
@@ -162,7 +151,7 @@ export default function (
         },
         () => {
           (io && io.disconnect()) ||
-            window.removeEventListener('scroll', this.checkRender);
+            window.removeEventListener('scroll', this.measure);
         }
       );
     }
