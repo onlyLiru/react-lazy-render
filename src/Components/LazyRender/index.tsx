@@ -38,8 +38,8 @@ export default function (
     placeholderStyle = null,
     distance = 0,
   }: Params = {
-      TargetComponent: null,
-    }
+    TargetComponent: null,
+  }
 ) {
   if (!TargetComponent) {
     return <div>请配置异步加载的组件!!!!!!! </div>;
@@ -70,19 +70,19 @@ export default function (
       return this.state.isTrueRender ? (
         <TargetComponent {...this.props} />
       ) : (
-          (CustomPlaceholder && (
-            <div id={this.state.customComId}>
-              <CustomPlaceholder />
-            </div>
-          )) || (
-            <div
-              ref={(dom) => {
-                this.lazyCom = dom;
-              }}
-              style={mergeStyle}
-            />
-          )
-        );
+        (CustomPlaceholder && (
+          <div id={this.state.customComId}>
+            <CustomPlaceholder />
+          </div>
+        )) || (
+          <div
+            ref={(dom) => {
+              this.lazyCom = dom;
+            }}
+            style={mergeStyle}
+          />
+        )
+      );
     }
 
     componentDidMount() {
@@ -108,18 +108,18 @@ export default function (
      *
      */
     measure = () => {
-      const { lazyCom } = this,
-        { innerHeight: winHeight } = window;
+      const { lazyCom } = this;
+      const { innerHeight: winHeight } = window;
 
       if (!lazyCom || !lazyCom.getBoundingClientRect) {
         return;
       }
 
-      let rect = lazyCom.getBoundingClientRect();
+      const rect = lazyCom.getBoundingClientRect();
 
       if (rect.top <= winHeight + distance) {
         this.trueRender();
-      };
+      }
     };
 
     /**
