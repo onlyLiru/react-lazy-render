@@ -10,6 +10,7 @@ module.exports = {
     'eslint-config-ali/typescript',
     'eslint-config-ali/typescript/react',
     'eslint-config-ali/jsx-a11y',
+    "prettier/@typescript-eslint",
   ],
   parserOptions: {
     project: './tsconfig.json',
