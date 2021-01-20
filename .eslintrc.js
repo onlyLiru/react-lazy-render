@@ -14,7 +14,7 @@ module.exports = {
     'prettier/react',
   ],
   parserOptions: {
-    "project": "./tsconfig.json",
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
