@@ -2,9 +2,9 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-20 11:38:36
+ * @Last Modified time: 2021-01-20 11:39:54
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 interface Params {
   TargetComponent: any;
@@ -13,11 +13,12 @@ interface Params {
   distance?: number;
 }
 
+
 const defaultStyle = {
-  minHeight: "200px",
-  background: "#f9f8f9",
+  minHeight: '200px',
+  background: '#f9f8f9',
   borderRadius: 8,
-  marginBottom: "10px",
+  marginBottom: '10px',
 };
 
 /**
@@ -62,7 +63,7 @@ export default function (
       this.timer = null;
       this.state = {
         isTrueRender: false,
-        customComId: "__async_painter_custom_container__",
+        customComId: '__async_painter_custom_container__',
       };
     }
 
@@ -71,16 +72,16 @@ export default function (
         <TargetComponent {...this.props} />
       ) : (
         (CustomPlaceholder && (
-          <div id={this.state.customComId}>
-            <CustomPlaceholder />
-          </div>
+        <div id={this.state.customComId}>
+          <CustomPlaceholder />
+        </div>
         )) || (
-          <div
-            ref={(dom) => {
-              this.lazyCom = dom;
-            }}
-            style={mergeStyle}
-          />
+        <div
+          ref={(dom) => {
+            this.lazyCom = dom;
+          }}
+          style={mergeStyle}
+        />
         )
       );
     }
@@ -93,12 +94,12 @@ export default function (
       if (!this.state.isTrueRender) {
         if (
           window.IntersectionObserver &&
-          typeof window.IntersectionObserver === "function"
+          typeof window.IntersectionObserver === 'function'
         ) {
           // 支持IntersectionObserver的浏览器
           this.initIo();
         } else {
-          window.addEventListener("scroll", this.measure);
+          window.addEventListener('scroll', this.measure);
         }
       }
     }
@@ -151,7 +152,7 @@ export default function (
         },
         () => {
           (io && io.disconnect()) ||
-            window.removeEventListener("scroll", this.measure);
+            window.removeEventListener('scroll', this.measure);
         }
       );
     }
