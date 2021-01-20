@@ -1,31 +1,31 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     es6: true,
   },
   extends: [
-    "eslint-config-ali",
-    "eslint-config-ali/react",
-    "eslint-config-ali/typescript",
-    "eslint-config-ali/typescript/react",
-    "eslint-config-ali/jsx-a11y",
+    'eslint-config-ali',
+    'eslint-config-ali/react',
+    'eslint-config-ali/typescript',
+    'eslint-config-ali/typescript/react',
+    'eslint-config-ali/jsx-a11y',
   ],
   parserOptions: {
-    project: "./tsconfig.json",
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 6,
-    sourceType: "module",
+    sourceType: 'module',
     allowImportExportEverywhere: false,
     codeFrame: true,
   },
-  plugins: ["react"],
+  plugins: ['react'],
   settings: {
     react: {
-      pragma: "React",
-      version: "detect",
+      pragma: 'React',
+      version: 'detect',
     },
   },
   rules: {},
