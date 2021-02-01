@@ -5,7 +5,6 @@ module.exports = {
     es6: true,
   },
   extends: [
-    "eslint-config-ali",
     "eslint-config-ali/react",
     "eslint-config-ali/typescript",
     "eslint-config-ali/typescript/react",

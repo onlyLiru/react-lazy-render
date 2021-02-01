@@ -2,23 +2,11 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-01-20 11:52:20
+ * @Last Modified time: 2021-02-01 12:35:19
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from "react";
 
-interface Params {
-  TargetComponent: any;
-  CustomPlaceholder?: any;
-  placeholderStyle?: any;
-  distance?: number;
-}
-
-const defaultStyle = {
-  minHeight: "200px",
-  background: "#f9f8f9",
-  borderRadius: 8,
-  marginBottom: "10px",
-};
+import { Params, Props, State, defaultStyle } from "./types";
 
 /**
  *
@@ -49,15 +37,11 @@ export default function (
     ? { ...defaultStyle, ...placeholderStyle }
     : defaultStyle;
 
-  return class LazyComponent extends Component {
-    state: {
-      isTrueRender: boolean;
-      customComId: string;
-    };
+  return class LazyComponent extends Component<Props, State> {
     lazyCom: any;
     timer: any;
 
-    constructor(props: any) {
+    constructor(props: Props) {
       super(props);
       this.timer = null;
       this.state = {
@@ -104,7 +88,7 @@ export default function (
     }
 
     /**
-     *以offsetTop的形式计算可见
+     *以getBoundingClientRect的形式计算可见
      *
      */
     measure = () => {
