@@ -1,21 +1,25 @@
-### @ali/tbdx-react-lazy-render
+# @React
+
 ***
 延迟加载React组件，适用于PC和Mobile端。
 
-### 安装
-`$ tnpm install @ali/tbdx-react-lazy-render `
+## 安装
 
-### 使用说明
-**在一个页面很长的时候，为了优化首屏的加载效率，可以使用@ali/tbdx-react-lazy-render这个组件对你原有的组件进行一层包装，他就会在还没有出现在屏幕可视区域之前不会加载你的组件**
+`$ tnpm install @ali/tbdx-react-lazy-render`
+
+## 使用说明
+
+在一个页面很长的时候，为了优化首屏的加载效率，可以使用@React这个组件对你原有的组件进行一层包装，他就会在还没有出现在屏幕可视区域之前不会加载你的组件
 
 例如：
-```
+
+```javascript
 import AsyncPainter from "@ali/tbdx-react-lazy-render";
 
 function App() {
-	return (<div>
-		你的组件
-	</div>);
+ return (<div>
+  你的组件
+ </div>);
 }
 
 export default AsyncPainter({
@@ -33,7 +37,8 @@ export default AsyncPainter({
 |CustomPlaceholder|否|ReactComponent|空div元素|如果你对默认展位组件不满意，你可以通过这个字段自定义占位组件|
 
 placeholderStyle默认:
-```
+
+```javascript
 {
   minHeight: '200px',
   background: '#f9f8f9',
@@ -41,5 +46,3 @@ placeholderStyle默认:
   marginBottom: '10px',
 }
 ```
-
-
