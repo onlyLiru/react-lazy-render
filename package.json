@@ -6,7 +6,9 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
   },
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
@@ -15,7 +17,8 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
     }
   },
   "lint-staged": {
@@ -36,17 +39,7 @@
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@types/babel__core": "^7.1.12",
     "@types/react": "^17.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.14.0",
-    "@typescript-eslint/parser": "^4.14.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.17.0",
-    "eslint-config-ali": "^11.4.1",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "f2elint": "^1.1.1",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",

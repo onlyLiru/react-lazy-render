@@ -1,7 +1,6 @@
-node_modules
-*.log
-*.DS_Store
-dist
-.idea
-.vscode
-*.md
+node_modules/
+build/
+dist/
+**/*.min.js
+**/*-min.js
+**/*.bundle.js

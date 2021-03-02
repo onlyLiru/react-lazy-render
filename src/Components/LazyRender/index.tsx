@@ -2,11 +2,12 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-02-01 12:35:19
+ * @Last Modified time: 2021-03-02 16:31:44
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
 import React, { Component } from "react";
 
-import { Params, Props, State, defaultStyle } from "./types";
+import { Params,
+   Props, State, defaultStyle} from "./types";
 
 /**
  *
