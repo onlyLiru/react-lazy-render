@@ -19,8 +19,8 @@ export const defaultStyle: {
   borderRadius: number;
   marginBottom: string;
 } = {
-  minHeight: "200px",
-  background: "#f9f8f9",
+  minHeight: '200px',
+  background: '#f9f8f9',
   borderRadius: 8,
-  marginBottom: "10px",
+  marginBottom: '10px',
 };

@@ -22,8 +22,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "f2elint fix"
+    "*": [
+      "npm run f2elint-fix"
     ]
   },
   "devDependencies": {
