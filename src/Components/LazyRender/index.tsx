@@ -2,12 +2,11 @@
  * @Author: liru
  * @Date: 2021-01-07 16:11:56
  * @Last Modified by: liru
- * @Last Modified time: 2021-03-02 16:44:47
+ * @Last Modified time: 2021-03-02 16:48:31
  * @Desc: 描述 支持组建异步加载，将组建出现在视口范围内则渲染真实组件，否则渲染一个占位组件 */
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Params,
-   Props, State, defaultStyle} from "./types";
+import { Params, Props, State, defaultStyle } from './types';
 
 /**
  *
@@ -28,15 +27,13 @@ export default function (
     distance = 0,
   }: Params = {
     TargetComponent: null,
-  }
+  },
 ) {
   if (!TargetComponent) {
     return <div>请配置异步加载的组件!!!!!!! </div>;
   }
 
-  const mergeStyle = placeholderStyle
-    ? { ...defaultStyle, ...placeholderStyle }
-    : defaultStyle;
+  const mergeStyle = placeholderStyle ? { ...defaultStyle, ...placeholderStyle } : defaultStyle;
 
   return class LazyComponent extends Component<Props, State> {
     lazyCom: any;
@@ -47,7 +44,7 @@ export default function (
       this.timer = null;
       this.state = {
         isTrueRender: false,
-        customComId: "__async_painter_custom_container__",
+        customComId: '__async_painter_custom_container__',
       };
     }
 
@@ -76,14 +73,11 @@ export default function (
       }
 
       if (!this.state.isTrueRender) {
-        if (
-          window.IntersectionObserver &&
-          typeof window.IntersectionObserver === "function"
-        ) {
+        if (window.IntersectionObserver && typeof window.IntersectionObserver === 'function') {
           // 支持IntersectionObserver的浏览器
           this.initIo();
         } else {
-          window.addEventListener("scroll", this.measure);
+          window.addEventListener('scroll', this.measure);
         }
       }
     }
@@ -124,7 +118,7 @@ export default function (
         {
           root: null,
           threshold: 0,
-        }
+        },
       );
       io.observe(lazyCom);
     };
@@ -135,9 +129,8 @@ export default function (
           isTrueRender: true,
         },
         () => {
-          (io && io.disconnect()) ||
-            window.removeEventListener("scroll", this.measure);
-        }
+          (io && io.disconnect()) || window.removeEventListener('scroll', this.measure);
+        },
       );
     }
   };

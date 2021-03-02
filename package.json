@@ -17,7 +17,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "f2elint commit-file-scan",
+      "pre-commit": "lint-staged",
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
