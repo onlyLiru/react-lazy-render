@@ -1,7 +1,7 @@
 {
-  "name": "@ali/tbdx-react-lazy-render",
+  "name": "react-lazy-render",
   "version": "1.0.7",
-  "description": "",
+  "description": "react lazy loader IntersectionObserver",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
@@ -13,7 +13,7 @@
   "publishConfig": {
     "registry": "https://registry.npm.alibaba-inc.com"
   },
-  "author": "wb-lr903313@alibaba-inc.com",
+  "author": "only_liru@sina.com",
   "license": "ISC",
   "husky": {
     "hooks": {
