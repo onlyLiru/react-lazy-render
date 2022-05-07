@@ -1,6 +1,6 @@
 {
-  "name": "react-lazy-render",
-  "version": "1.0.7",
+  "name": "lr-react-lazy-render",
+  "version": "1.0.0",
   "description": "react lazy loader IntersectionObserver",
   "main": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "f2elint-fix": "f2elint fix"
   },
   "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
+    "registry": "https://github.com/onlyLiru/react-lazy-render/tree/master"
   },
   "author": "only_liru@sina.com",
   "license": "ISC",
